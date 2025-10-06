@@ -33,7 +33,7 @@ jobs:
           IMAGE_TAG=${{ github.run_number }}
           IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/webpage:$IMAGE_TAG
 
-          docker build -t webpage:$IMAGE_TAG -f Ready/Dockerfile Ready
+          docker build -t webpage:$IMAGE_TAG -f Dockerfile .
           docker tag webpage:$IMAGE_TAG $IMAGE_URI
           docker push $IMAGE_URI
 

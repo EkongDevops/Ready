@@ -62,4 +62,4 @@ jobs:
 
             echo "Running new container"
             docker run -d --name webpage -p 80:80 $IMAGE_URI
-EOF
+            EOF

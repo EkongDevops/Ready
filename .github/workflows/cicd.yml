@@ -1,6 +1,5 @@
 name: CI - Build and Deploy Static Webpage to EC2
 
-# Trigger on push to main or manual run
 on:
   push:
     branches:
@@ -11,7 +10,7 @@ jobs:
   build-push:
     runs-on: ubuntu-latest
     steps:
-      # 1. Checkout repo
+      # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -51,15 +50,6 @@ jobs:
           IMAGE_TAG=${{ github.run_number }}
           IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/webpage:$IMAGE_TAG
 
-          # SSH into EC2 and deploy container
-          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@${{ secrets.SERVER_IP }} << EOF
-            set -e
-            echo "Pulling image $IMAGE_URI"
-            docker pull $IMAGE_URI
-
-            echo "Stopping old container if exists"
-            docker rm -f webpage || true
-
-            echo "Running new container"
-            docker run -d --name webpage -p 80:80 $IMAGE_URI
-            EOF
+          # SSH into EC2 and run deployment in one command (no EOF/heredoc)
+          ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@${{ secrets.SERVER_IP }} \
+          "docker pull $IMAGE_URI && docker rm -f webpage || true && docker run -d --name webpage -p 80:80 $IMAGE_URI"

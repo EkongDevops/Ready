@@ -1,6 +1,6 @@
 name: CI - Build and Deploy Static Webpage to EC2
 
-# Trigger workflow on push to main or manual run
+# Trigger on push to main or manual run
 on:
   push:
     branches:
@@ -15,7 +15,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2. Configure AWS credentials (best practice)
+      # 2. Configure AWS credentials from GitHub secrets
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -23,40 +23,40 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # 3. Login to Amazon ECR (modern, avoids TTY issues)
+      # 3. Login to Amazon ECR
       - name: Login to Amazon ECR
         uses: aws-actions/amazon-ecr-login@v2
 
-      # 4. Build and push Docker image to ECR
+      # 4. Build and push Docker image
       - name: Build and push Docker image
         run: |
           IMAGE_TAG=${{ github.run_number }}
           IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/webpage:$IMAGE_TAG
 
-          docker build -t ready:$IMAGE_TAG -f Ready/Dockerfile Ready
-          docker tag ready:$IMAGE_TAG $IMAGE_URI
+          docker build -t webpage:$IMAGE_TAG -f Ready/Dockerfile Ready
+          docker tag webpage:$IMAGE_TAG $IMAGE_URI
           docker push $IMAGE_URI
 
   deploy:
     runs-on: ubuntu-latest
     needs: build-push
     steps:
-      - name: Deploy to EC2 instance
+      - name: Deploy to EC2
         run: |
-          # Save SSH key
+          # Save EC2 SSH key
           echo "${{ secrets.SSH_KEY }}" > mykey.pem
           chmod 600 mykey.pem
 
           IMAGE_TAG=${{ github.run_number }}
           IMAGE_URI=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/webpage:$IMAGE_TAG
 
-          # SSH into EC2 and deploy container
+          # SSH and deploy
           ssh -o StrictHostKeyChecking=no -i mykey.pem ubuntu@${{ secrets.SERVER_IP }} << 'EOF'
-            # If EC2 has IAM role with ECR access, this login is optional
+            # Optional login if EC2 IAM role has ECR access skip this
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | \
               docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
 
             docker pull $IMAGE_URI
-            docker rm -f ready || true
-            docker run -d --name ready -p 80:80 $IMAGE_URI
+            docker rm -f webpage || true
+            docker run -d --name webpage -p 80:80 $IMAGE_URI
           EOF

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Christopher Ekong - Portfolio</title>
+<link rel="stylesheet" href="css/style.css"->
+<link rel="icon" type="image/png" href="img/favicon.png">
+</head>
+<body>
+<header class="site-header">
+  <div class="container header-inner">
+    <div class="brand">Christopher Ekong</div>
+    <nav class="nav" id="nav">
+      <a class="smoothscroll"a href="#about">About</a>
+      <a class="smoothscroll"href="#featured">Skills</a>
+      <a class="smoothscroll"a href="#my-work">My Work</a>
+      <a class="smoothscroll"a href="#contact">Contact</a>
+    </nav>
+    <button id="nav-toggle" class="nav-toggle" aria-label="Open navigation">&#9776;</button>
+  </div>
+</header>
+
+<main>
+  <section id="about" class="hero container">
+    <div class="hero-center">
+      <img src="img/profile.jpg" alt="Christopher Sylvanus Ekong" class="profile">
+      <div class="linkedin">
+        <img src="img/linkedin.png" alt="LinkedIn" class="linkedin-icon">
+        <a href="https://www.linkedin.com/in/christopherekong" target="_blank" rel="noopener">Connect with me on LinkedIn</a>
+      </div>
+    </div>
+    <div class="hero-center">
+      <h1>Building Scalable Cloud Solutions with Operational Precision</h1>
+      <p>I’m a Cloud Computing Enthusiast with a strong foundation in AWS services, Cloud Security, and DevOps principles, complemented by my experience as an Operations Associate. My unique blend of technical and operational skills allows me to design, deploy, and optimize cloud solutions while ensuring efficiency, security, and reliability.
+
+I’m passionate about streamlining infrastructure, automating workflows, and applying best practices in cloud security. With a background in CRM systems, customer support, and process optimization, I bring a business-first mindset to every technical solution, ensuring technology serves both performance and people.
+
+Currently, I’m deepening my expertise in AWS architecture, DevOps pipelines, and cloud security frameworks to stay ahead in the fast-evolving tech landscape.</p>
+    </div>
+  </section>
+
+  <section id="featured" class="featured container">
+    <h2>Skills</h2>
+    <div class="work-grid">
+      <article class="work-item">
+        <img src="img/aws-architecture.png" alt="AWS Architecture">
+        <h3>AWS Architecture</h3>
+        <p>Designing scalable, fault-tolerant architectures using AWS services.</p>
+      </article>
+      <article class="work-item">
+        <img src="img/devops-pipeline.png" alt="DevOps Pipeline">
+        <h3>DevOps Pipelines</h3>
+        <p>CI/CD pipelines, automation, and infrastructure-as-code.</p>
+      </article>
+      <article class="work-item">
+        <img src="img/cloud-security.png" alt="Cloud Security">
+        <h3>Cloud Security</h3>
+        <p>Identity & access management, encryption, and security best practices.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="my-work" class="my-work container">
+    <h2>My Work</h2>
+    <div class="projects-grid">
+      <article class="project-item">
+        <img src="img/project1.jpg" alt="Project 1">
+        <h3>Static Website Hosting</h3>
+        <p>Built and deployed a responsive static portfolio website hosted securely on AWS S3 with HTTPS via CloudFront.</p>
+        </article>
+      <article class="project-item">
+       <img src="img/project2.jpg" alt="Project 2">
+       <h3>AWS Organization Setup</h3>
+       <p>Configured an AWS Organization for multi-account management, consolidated billing, and security controls.</p>
+      </article>
+      <article class="project-item">
+       <img src="img/project3.jpg" alt="Project 3">
+       <h3>EC2 Launch & Scripting</h3>
+       <p>Launched and configured EC2 instances, connected via MobaXterm, and automated tasks with shell scripts.</p>
+      </article>
+    </div>
+ </section>
+
+  <section id="contact" class="contact container">
+    <h2>Contact</h2>
+    <p>Interested in working together? Send me a message below.</p>
+    <form id="contact-form" action="https://formspree.io/f/xdkdbweg" method="POST">
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" required>
+
+      <label for="email">Email</label>
+      <input id="email" name="_replyto" type="email" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="6" required></textarea>
+
+      <!-- redirect on success -->
+      <input type="hidden" name="_subject" value="New message from portfolio">
+      <button type="submit">Send Message</button>
+      <p id="form-status" class="form-status" aria-live="polite"></p>
+    </form>
+    <!--<p class="small">Note: Replace <code>{YOUR_FORM_ID}</code> in the form action with your Formspree form ID. After you create your form at Formspree (https://formspree.io), they will provide the endpoint to paste here. You will also need to verify your email with Formspree to start receiving messages.</p>-->
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>&copy; 2025 Christopher Sylvanus Ekong. All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
